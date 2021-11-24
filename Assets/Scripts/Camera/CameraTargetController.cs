@@ -8,7 +8,8 @@ public class CameraTargetController : MonoBehaviour
     public Transform target;
     public float smoothSpeed = 0.125f;
     public Vector3 offset;
-
+    
+    //tsj was here.
 
 
     void LateUpdate()
@@ -26,7 +27,7 @@ public class CameraTargetController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log("Œciana!");
+            Debug.Log("Å’ciana!");
         }
 
     }
