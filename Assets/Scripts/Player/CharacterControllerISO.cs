@@ -23,10 +23,34 @@ public class CharacterControllerISO : MonoBehaviour
    
     void Update()
     {
+        LookDirection();
         CheckIfGrounded();
-        Debug.Log(Grounded);
         if (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("d") || Input.GetKey("s")) Move();
         
+    }
+
+    public Vector3 MousePos()
+    {
+        Vector3 clickPosition = -Vector3.one;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            clickPosition = hit.point;
+        }
+        //Debug.Log(clickPosition);
+        return clickPosition;
+    }
+
+    public void LookDirection() 
+    {
+        //Debug.Log(MousePos());
+        Vector3 MP = MousePos();
+        Vector3 pacz = MP - transform.position;
+        float angle = Mathf.Atan2(pacz.x, pacz.z) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.down);
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
     }
 
     public bool CheckIfGrounded() 
@@ -41,6 +65,7 @@ public class CharacterControllerISO : MonoBehaviour
 
     void Move() 
     {
+        
         float avaStamina = StaminaBar.instance.getStamina();
 
         if (Input.GetKey(KeyCode.LeftShift) && avaStamina>0.1f)
@@ -65,7 +90,7 @@ public class CharacterControllerISO : MonoBehaviour
             transform.forward = heading;
             transform.position += righrMovment;
             transform.position += upMovment;
-
+            LookDirection();
 
         }
         else 
@@ -85,6 +110,7 @@ public class CharacterControllerISO : MonoBehaviour
             transform.forward = heading;
             transform.position += righrMovment;
             transform.position += upMovment;
+            LookDirection();
         }
       
     }
